@@ -8,10 +8,6 @@ export const ContactCard = props => {
 		//initialize state here
 	});
 
-	const updateContact = () => {
-		props.updateContact(props.id, props.fullName, props.email, props.phone, props.address);
-	};
-
 	const deleteContact = () => {
 		props.deleteContact(props.id);
 	};
@@ -70,8 +66,7 @@ ContactCard.propTypes = {
 	phone: PropTypes.string,
 	address: PropTypes.string,
 	history: PropTypes.object,
-	deleteContact: PropTypes.func,
-	updateContact: PropTypes.func
+	deleteContact: PropTypes.func
 };
 
 /**

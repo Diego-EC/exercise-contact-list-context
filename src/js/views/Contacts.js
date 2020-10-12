@@ -42,11 +42,6 @@ export const Contacts = () => {
 		return jsonMap;
 	}
 
-	async function updateContact(id, fullName, email, phone, address) {
-		console.log("updateContact");
-		console.log(id);
-	}
-
 	async function deleteContact(id) {
 		let json = await actions.fetchDeleteContact(id);
 		if (json["msg"] == "ok") {
@@ -66,7 +61,6 @@ export const Contacts = () => {
 				phone={contact.phone}
 				address={contact.address}
 				deleteContact={deleteContact}
-				updateContact={updateContact}
 			/>
 		);
 	});
