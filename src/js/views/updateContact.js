@@ -1,27 +1,42 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const AddContact = () => {
+export const UpdateContact = () => {
 	const { store, actions } = useContext(Context);
 	const [fullName, setFullName] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [address, setAddress] = useState("");
 
-	async function createContact() {
-		await addContact();
+	//const { id } = useParams();
+	const id = 1425;
+
+	useEffect(() => {
+		useEffectAux();
+	}, []);
+
+	async function useEffectAux() {
+		await getContactById(id);
+	}
+
+	async function getContactById(id) {
+		let contact = await actions.getContactById(id);
+	}
+
+	async function editContact() {
+		await updateContact();
 		window.open("/", "_self");
 	}
 
-	async function addContact() {
-		await actions.fetchAddContact(fullName, email, phone, address);
+	async function updateContact() {
+		await actions.fetchUpdateContact(id, fullName, email, phone, address);
 	}
 
 	return (
 		<div className="container">
 			<div>
-				<h1 className="text-center mt-5">Add a new contact</h1>
+				<h1 className="text-center mt-5">Update Contact</h1>
 				<form>
 					<div className="form-group">
 						<label>Full Name</label>
@@ -59,7 +74,7 @@ export const AddContact = () => {
 							onChange={event => setAddress(event.target.value)}
 						/>
 					</div>
-					<button type="button" className="btn btn-primary form-control" onClick={createContact}>
+					<button type="button" className="btn btn-primary form-control" onClick={editContact}>
 						save
 					</button>
 					<Link className="mt-3 w-100 text-center" to="/">
