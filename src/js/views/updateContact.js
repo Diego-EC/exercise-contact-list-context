@@ -1,16 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import PropTypes, { func } from "prop-types";
 
-export const UpdateContact = () => {
+export const UpdateContact = props => {
 	const { store, actions } = useContext(Context);
 	const [fullName, setFullName] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [address, setAddress] = useState("");
 
-	//const { id } = useParams();
-	const id = 1425;
+	UpdateContact.propTypes = {
+		match: PropTypes.object
+	};
+
+	const id = props.match.params.id;
 
 	useEffect(() => {
 		useEffectAux();
@@ -22,6 +26,14 @@ export const UpdateContact = () => {
 
 	async function getContactById(id) {
 		let contact = await actions.getContactById(id);
+		asignContactValues(contact);
+	}
+
+	function asignContactValues(contact) {
+		setFullName(contact.full_name);
+		setEmail(contact.email);
+		setPhone(contact.phone);
+		setAddress(contact.address);
 	}
 
 	async function editContact() {
@@ -45,6 +57,7 @@ export const UpdateContact = () => {
 							className="form-control"
 							placeholder="Full Name"
 							onChange={event => setFullName(event.target.value)}
+							defaultValue={fullName}
 						/>
 					</div>
 					<div className="form-group">
@@ -54,6 +67,7 @@ export const UpdateContact = () => {
 							className="form-control"
 							placeholder="Enter email"
 							onChange={event => setEmail(event.target.value)}
+							defaultValue={email}
 						/>
 					</div>
 					<div className="form-group">
@@ -63,6 +77,7 @@ export const UpdateContact = () => {
 							className="form-control"
 							placeholder="Enter phone"
 							onChange={event => setPhone(event.target.value)}
+							defaultValue={phone}
 						/>
 					</div>
 					<div className="form-group">
@@ -72,6 +87,7 @@ export const UpdateContact = () => {
 							className="form-control"
 							placeholder="Enter address"
 							onChange={event => setAddress(event.target.value)}
+							defaultValue={address}
 						/>
 					</div>
 					<button type="button" className="btn btn-primary form-control" onClick={editContact}>
